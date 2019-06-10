@@ -1,0 +1,20 @@
+#! /usr/bin/env sh
+rostopic echo -p /mavros/vision_pose/pose > vision_220519.txt &
+#rostopic echo -p /uwb/pose > uwb_8519.txt &
+rostopic echo -p /mavros/local_position/pose > local_220519.txt & 
+rostopic echo -p /cam/pose > cam_220519.txt &
+rostopic echo -p /camera/odom/sample > cam_odom_220519.txt &
+rostopic echo -p /total/pose > total_220519.txt &
+rostopic echo -p /uwb/pose > uwb_220519.txt &
+#rostopic echo /delta/total > deltaTotal_8519.txt &
+#rostopic echo /delta/uwb > deltaUWB_8519.txt & 
+#rostopic echo -p /mavros/setpoint_position/local > setpoints_200519.txt & 
+
+while true
+do
+	CPU_USAGE=$(top -b -n2 -p 1 | fgrep "Cpu(s)" | tail -1 | awk -F'id,' -v prefix="$prefix" '{ split($1, vs, ","); v=vs[length(vs)]; sub("%","", v); printf "%s%.1f%%\n", prefix, 100 -v }')
+	DATE=$(date "+%Y-%m-%d %H:%M:")
+	CPU_USAGE="$DATE ; $CPU_USAGE"
+	echo $CPU_USAGE >> cpu_8519.txt
+	sleep 10  
+done 

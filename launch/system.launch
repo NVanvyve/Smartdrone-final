@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find mavros)/launch/apm.launch"/>
+  <node name="positioning_system" type="positioning_system.py" pkg="smart_drone" required="true">
+    <param name='config_file_path' type="string" value='$(find smart_drone)/src/config.ini' />
+  </node>
+</launch>
